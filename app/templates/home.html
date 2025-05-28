@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transportima - HOME</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 70px; /* Sesuaikan dengan tinggi navbar jika ada */
+      }
+
+      body {
+        transition: background-color 0.5s ease; /* Contoh efek transisi latar belakang saat scrolling */
+        opacity: 100;
+        transition: opacity 1s ease;
+      }
+
+      .bg-custom {
+        background: linear-gradient(
+          to right,
+          #8a48f4,
+          #a051d1,
+          #d27c6f,
+          #ffb712
+        );
+        background-color: #542870;
+      }
+
+      .navbar {
+        height: 100px;
+      }
+
+      body,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      a {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .nav-item {
+        font-size: 19px;
+        font-weight: regular;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fafafa;
+      }
+
+      .navbar-nav .nav-item.active .nav-link,
+      .navbar-nav .nav-link.active {
+        color: #8a48f4;
+        font-weight: bold;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #8a48f4;
+      }
+
+      .navbar-brand .nav-link {
+        color: #fafafa;
+      }
+
+      .navbar-brand .nav-link.active {
+        color: #8a48f4;
+        font-weight: bold;
+      }
+
+      .navbar-brand .nav-link:hover {
+        color: #8a48f4;
+      }
+
+      .back-image {
+        background: url("{{ url_for('static', filename='assets/homecover.png') }}");
+        height: 100vh;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* Menempatkan gambar di tengah-tengah elemen */
+        display: flex;
+        align-items: center;
+        color: #fafafa;
+      }
+
+      .footer {
+        bottom: 0;
+        width: 100%;
+        background: linear-gradient(
+          to left,
+          #8a48f4,
+          #a051d1,
+          #d27c6f,
+          #ffb712
+        );
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .center-text {
+        width: 100%;
+        text-align: center;
+      }
+
+      .text-title {
+        color: #fafafa;
+        font-size: 70px;
+        font-weight: bold;
+      }
+
+      .lead {
+        font-size: 30px;
+      }
+
+      .container-introduce {
+        padding-top: 100px;
+      }
+
+      .intro {
+        font-size: 40px;
+        margin-bottom: 30px;
+      }
+
+      .intro1 {
+        background: linear-gradient(
+          to right,
+          #8a48f4,
+          #a051d1,
+          #d27c6f,
+          #ffb712
+        );
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .poin {
+        font-size: 25px;
+        margin-bottom: 150px;
+      }
+
+      .custom-img {
+        width: 100%; /* Set lebar gambar menjadi 100% dari lebar parent (container) */
+        height: auto; /* Biarkan tinggi mengikuti proporsi asli untuk menghindari distorsi */
+        max-width: 430px;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .custom-img:hover {
+        transform: scale(1.1);
+      }
+
+      .img-group-ref {
+        margin-bottom: 40px;
+      }
+
+      .img-group-ref img {
+        margin-right: 30px;
+        margin-left: 30px;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .img-group-ref img:hover {
+        transform: scale(1.1);
+      }
+
+      .scale {
+        font-size: 25px;
+      }
+
+      .footer img {
+        width: 180px; /* Adjust the size of the logo */
+        height: 30px; /* Adjust the size of the logo */
+      }
+
+      .tools {
+        padding-top: 150px;
+        padding-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-custom fixed-top">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <a class="navbar-brand mx-auto mr-auto mr" href="#">
+          <img
+            src="{{ url_for('static', filename='assets/TransportimaP.png') }}"
+            width="200"
+            height="60"
+            class="img-fluid d-inline-block-block align-center"
+            alt="Logo"
+          />
+        </a>
+        <ul class="navbar-nav mx-auto justify-content-center">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{  url_for('menu') }}">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{  url_for('about') }}">About</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container-fluid back-image">
+      <div class="center-text" data-aos="zoom-out" data-aos-duration="800">
+        <h1 class="text-center text-title">Welcome to Transportima</h1>
+        <p class="lead">Optimize Your Journey, One Click at a Time</p>
+      </div>
+    </div>
+
+    <div class="container container-introduce">
+      <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+          <h3
+            class="intro"
+            class="mb-4"
+            data-aos="zoom-in-up"
+            data-aos-duration="650"
+          >
+            Meet, <strong class="intro1">Transportima.</strong>
+          </h3>
+          <p
+            class="poin"
+            class="mb-4"
+            data-aos="zoom-in-up"
+            data-aos-duration="900"
+          >
+            <strong>Transportima</strong> or
+            <strong>Transportasi Optimal</strong> is an innovative vehicle
+            recommendation platform for your journey in various cities/regencies
+            of <em>Central Java.</em> Benefiting from the latest technology, we
+            provide accurate recommendations for three main modes of
+            transportation: motorcycle, car, and train. Easily find
+            transportation options that suit your journey. Explore
+            <em>Central Java</em> with confidence, Transportima is here to
+            ensure your travel experience becomes smoother and more comfortable.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="align-center">
+        <div class="align-center text-center">
+          <h2 class="mb-4" data-aos="zoom-in-up" data-aos-duration="650">
+            <strong>OUR SCALE</strong>
+          </h2>
+        </div>
+        <div class="row justify-content-between">
+          <div class="col-md-4 text-center">
+            <img
+              src="{{ url_for('static', filename='assets/motor.png') }}"
+              class="img-fluid custom-img"
+              data-aos="fade-up-right"
+              data-aos-duration="800"
+              data-aos-delay="300"
+            />
+            <p
+              class="scale"
+              data-aos="fade-up-right"
+              data-aos-duration="900"
+              data-aos-delay="600"
+            >
+              Motorcycle
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <img
+              src="{{ url_for('static', filename='assets/mobil.png') }}"
+              class="img-fluid custom-img"
+              data-aos="fade-up"
+              data-aos-duration="800"
+              data-aos-delay="300"
+            />
+            <p
+              class="scale"
+              data-aos="fade-up"
+              data-aos-duration="900"
+              data-aos-delay="600"
+            >
+              Car
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <img
+              src="{{ url_for('static', filename='assets/kereta.png') }}"
+              class="img-fluid custom-img"
+              data-aos="fade-up-left"
+              data-aos-duration="800"
+              data-aos-delay="300"
+            />
+            <p
+              class="scale"
+              data-aos="fade-up-left"
+              data-aos-duration="900"
+              data-aos-delay="600"
+            >
+              Train
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools">
+      <div class="align-center text-center">
+        <h2
+          class="align-center mb-4"
+          data-aos="zoom-in-up"
+          data-aos-duration="650"
+        >
+          <strong>REFERENCES AND TOOLS</strong>
+        </h2>
+
+        <!-- Grup pertama: ref1 dan ref2 -->
+        <div class="img-group-ref">
+          <img
+            src="{{ url_for('static', filename='assets/ref1.png') }}"
+            class="img-fluid"
+            alt="ref1"
+            data-aos="fade-up-right"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref2.png') }}"
+            class="img-fluid"
+            alt="ref2"
+            data-aos="fade-up-left"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+        </div>
+
+        <!-- Grup kedua: ref3-ref6 -->
+        <div class="img-group-ref">
+          <img
+            src="{{ url_for('static', filename='assets/ref3.png') }}"
+            class="img-fluid"
+            alt="ref3"
+            data-aos="fade-up-right"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref4.png') }}"
+            class="img-fluid"
+            alt="ref4"
+            data-aos="fade-up-right"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref5.png') }}"
+            class="img-fluid"
+            alt="ref5"
+            data-aos="fade-up-left"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref6.png') }}"
+            class="img-fluid"
+            alt="ref6"
+            data-aos="fade-up-left"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+        </div>
+
+        <!-- Grup ketiga: ref7-ref11 -->
+        <div class="img-group-ref">
+          <img
+            src="{{ url_for('static', filename='assets/ref7.png') }}"
+            class="img-fluid"
+            alt="ref7"
+            data-aos="fade-up-right"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref8.png') }}"
+            class="img-fluid"
+            alt="ref8"
+            data-aos="fade-up-right"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref9.png') }}"
+            class="img-fluid"
+            alt="ref9"
+            data-aos="fade-up"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref10.png') }}"
+            class="img-fluid"
+            alt="ref10"
+            data-aos="fade-up-left"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+          <img
+            src="{{ url_for('static', filename='assets/ref11.png') }}"
+            class="img-fluid"
+            alt="ref11"
+            data-aos="fade-up-left"
+            data-aos-duration="800"
+            data-aos-delay="300"
+          />
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <img src="{{ url_for('static', filename='assets/TransportimaP.png') }}" alt="Logo" />
+      <p>©Copyright by <strong>Kelompok 11</strong></p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.body.style.opacity = 1;
+      });
+    </script>
+
+    <script>
+      // Menangani klik pada tautan dengan animasi pergeseran halus
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
