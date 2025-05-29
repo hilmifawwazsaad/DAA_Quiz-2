@@ -30,7 +30,7 @@ def bfs_shortest_path(graph, start, finish):
                 queue.append((neighbor, new_path))
                 visited.add(neighbor)
     
-    return None, float('inf')  # No path found
+    return None, None  # No path found
 
 def dfs_find_path(graph, start, finish, visited=None, path=None):
     """
@@ -69,7 +69,7 @@ def calculate_path_cost(graph, path):
             cost = graph[path[i]][path[i+1]]['weight']
             total_cost += cost
         except KeyError:
-            return float('inf')  # Path doesn't exist
+            return None  # Path doesn't exist
     
     return total_cost
 
@@ -114,22 +114,20 @@ def process_dijkstra(start, finish):
                 'path_string': " → ".join(dijkstra_path),
                 'cost': dijkstra_cost,
                 'hops': len(dijkstra_path) - 1,
-                'status': 'success'
-            }
+                'status': 'success'            }
             
         except (nx.NetworkXNoPath, nx.NodeNotFound) as e:
             results[transport_name] = {
                 'algorithm': 'dijkstra',
                 'path': None,
                 'path_string': "No path available",
-                'cost': float('inf'),
-                'hops': float('inf'),
-                'status': 'no_path',
+                'cost': None,
+                'hops': None,                'status': 'no_path',
                 'error': str(e)
             }
     
     # Find best option
-    best_option = min(results.items(), key=lambda x: x[1]['cost'] if x[1]['cost'] != float('inf') else float('inf'))
+    best_option = min(results.items(), key=lambda x: x[1]['cost'] if x[1]['cost'] is not None else float('inf'))
     
     return {
         'results': results,
@@ -159,8 +157,7 @@ def process_bfs(start, finish):
                     'algorithm': 'bfs',
                     'path': bfs_path,
                     'path_string': " → ".join(bfs_path),
-                    'cost': bfs_cost,
-                    'hops': bfs_hops,
+                    'cost': bfs_cost,                    'hops': bfs_hops,
                     'status': 'success'
                 }
             else:
@@ -168,8 +165,8 @@ def process_bfs(start, finish):
                     'algorithm': 'bfs',
                     'path': None,
                     'path_string': "No path available",
-                    'cost': float('inf'),
-                    'hops': float('inf'),
+                    'cost': None,
+                    'hops': None,
                     'status': 'no_path'
                 }
                 
@@ -178,14 +175,13 @@ def process_bfs(start, finish):
                 'algorithm': 'bfs',
                 'path': None,
                 'path_string': "No path available",
-                'cost': float('inf'),
-                'hops': float('inf'),
-                'status': 'error',
-                'error': str(e)
+                'cost': None,
+                'hops': None,
+                'status': 'error',                'error': str(e)
             }
     
     # Find best option (minimum hops)
-    best_option = min(results.items(), key=lambda x: x[1]['hops'] if x[1]['hops'] != float('inf') else float('inf'))
+    best_option = min(results.items(), key=lambda x: x[1]['hops'] if x[1]['hops'] is not None else float('inf'))
     
     return {
         'results': results,
@@ -203,8 +199,7 @@ def process_dfs(start, finish):
     """
     Gmotor, Gcar, Gtrain = create_graphs()
     results = {}
-    
-    # Process each transportation type with DFS
+      # Process each transportation type with DFS
     for transport_name, graph in [("motorcycle", Gmotor), ("car", Gcar), ("train", Gtrain)]:
         try:
             dfs_path = dfs_find_path(graph, start, finish)
@@ -224,8 +219,8 @@ def process_dfs(start, finish):
                     'algorithm': 'dfs',
                     'path': None,
                     'path_string': "No path available",
-                    'cost': float('inf'),
-                    'hops': float('inf'),
+                    'cost': None,
+                    'hops': None,
                     'status': 'no_path'
                 }
                 
@@ -234,8 +229,8 @@ def process_dfs(start, finish):
                 'algorithm': 'dfs',
                 'path': None,
                 'path_string': "No path available",
-                'cost': float('inf'),
-                'hops': float('inf'),
+                'cost': None,
+                'hops': None,
                 'status': 'error',
                 'error': str(e)
             }
