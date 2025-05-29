@@ -3,81 +3,216 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Transportima</title>
+    <title>Transportima - Welcome</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <style>
       :root {
         --primary: #8a48f4;
         --accent: #ffb712;
-        --background: #121212;
+        --bg: #121212;
         --text: #ffffff;
+        --card: #1f1f1f;
+        --shadow: rgba(138, 72, 244, 0.3);
       }
+      
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
+      
       body {
         font-family: 'Poppins', sans-serif;
         overflow: hidden;
-        background-color: var(--background);
+        background-color: var(--bg);
         color: var(--text);
+        line-height: 1.6;
       }
+      
       .hero {
         position: relative;
         width: 100vw;
         height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .hero img {
+      
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(138, 72, 244, 0.1), rgba(255, 183, 18, 0.1));
+        z-index: 1;
+      }
+      
+      .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0.3;
+        opacity: 0.4;
+        z-index: 0;
       }
+      
       .hero-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        position: relative;
+        z-index: 2;
         text-align: center;
+        max-width: 600px;
+        padding: 2rem;
       }
-      .hero-content img {
-        max-width: 320px;
-        transition: transform 0.4s;
-        filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.7));
+      
+      .logo-container {
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-out;
       }
-      .hero-content img:hover {
+      
+      .hero-logo {
+        max-width: 350px;
+        width: 100%;
+        height: auto;
+        transition: all 0.4s ease;
+        filter: drop-shadow(0 10px 20px var(--shadow));
+      }
+      
+      .hero-logo:hover {
         transform: scale(1.05);
+        filter: drop-shadow(0 15px 30px var(--shadow));
       }
+      
+      .welcome-text {
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-out 0.3s both;
+      }
+      
+      .welcome-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .welcome-subtitle {
+        font-size: 1.2rem;
+        font-weight: 400;
+        opacity: 0.9;
+        margin-bottom: 0;
+      }
+      
       .start-btn {
-        margin-top: 30px;
-        font-size: 18px;
-        padding: 10px 28px;
-        background: var(--primary);
+        display: inline-block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        padding: 14px 32px;
+        background: linear-gradient(135deg, var(--primary), #a051d1);
         border: none;
-        border-radius: 25px;
+        border-radius: 50px;
         color: var(--text);
         text-decoration: none;
-        transition: background 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(138, 72, 244, 0.3);
+        animation: fadeInUp 1s ease-out 0.6s both;
       }
+      
       .start-btn:hover {
-        background: var(--accent);
+        background: linear-gradient(135deg, var(--accent), #ffcc4d);
         color: #000;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(255, 183, 18, 0.4);
       }
-
-    </style>
-  </head>
+      
+      .start-btn:active {
+        transform: translateY(-1px);
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .hero-content {
+          padding: 1rem;
+        }
+        
+        .hero-logo {
+          max-width: 280px;
+        }
+        
+        .welcome-title {
+          font-size: 2rem;
+        }
+        
+        .welcome-subtitle {
+          font-size: 1rem;
+        }
+        
+        .start-btn {
+          font-size: 1rem;
+          padding: 12px 28px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .hero-logo {
+          max-width: 250px;
+        }
+        
+        .welcome-title {
+          font-size: 1.8rem;
+        }
+        
+        .welcome-subtitle {
+          font-size: 0.9rem;
+        }
+      }
+    </style>  </head>
   <body>
-      <div class="hero">
-        <img src="{{ url_for('static', filename='assets/bgcover.png') }}" alt="Background Cover" />
-        <div class="hero-content">
-          <img src="{{ url_for('static', filename='assets/TransportimaPth.png') }}" alt="Logo" style="margin-bottom: 20px;" />
-          <div>
-            <a href="{{ url_for('home') }}" class="start-btn">Start Your Journey</a>
-          </div>
+    <div class="hero">
+      <img src="{{ url_for('static', filename='assets/bgcover.png') }}" alt="Background Cover" class="hero-bg" />
+      
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+        <div class="logo-container">
+          <img src="{{ url_for('static', filename='assets/TransportimaPth.png') }}" alt="Transportima Logo" class="hero-logo" />
+        </div>
+        
+        <div class="welcome-text">
+          <h1 class="welcome-title">Welcome to Transportima</h1>
+          <p class="welcome-subtitle">Your intelligent transportation route finder</p>
+        </div>
+        
+        <div class="cta-container">
+          <a href="{{ url_for('home') }}" class="start-btn">Start Your Journey</a>
         </div>
       </div>
+    </div>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-out-cubic'
+      });
+    </script>
   </body>
 </html>

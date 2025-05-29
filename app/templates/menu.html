@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Transportima - Menu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
-    <style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />    <style>
       :root {
         --primary: #8a48f4;
         --accent: #ffb712;
@@ -14,78 +15,319 @@
         --text: #ffffff;
         --textf: #000000;
         --card: #1f1f1f;
+        --gradient-primary: linear-gradient(135deg, #8a48f4, #a051d1);
+        --gradient-accent: linear-gradient(135deg, #ffb712, #ffcc4d);
+        --shadow-primary: rgba(138, 72, 244, 0.3);
+        --shadow-accent: rgba(255, 183, 18, 0.3);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
         background-color: var(--bg);
         color: var(--text);
         font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
+        line-height: 1.6;
+        overflow-x: hidden;
       }
 
+      /* Navbar Styling */
       .navbar {
-        background-color: var(--primary);
-        padding: 1rem;
+        background: var(--gradient-primary);
+        padding: 0.5rem 0;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(138, 72, 244, 0.2);
+        transition: var(--transition);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        min-height: 60px;
       }
 
       .navbar-brand img {
-        height: 40px;
+        height: 35px;
+        transition: var(--transition);
+      }
+
+      .navbar-brand img:hover {
+        transform: scale(1.03);
       }
 
       .nav-link {
-        color: #fff;
-        margin: 0 1rem;
+        color: #fff !important;
+        margin: 0 0.7rem;
         font-weight: 500;
+        font-size: 0.9rem;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        transition: var(--transition);
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        transition: var(--transition);
+        transform: translateX(-50%);
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
       }
 
       .nav-link:hover,
       .nav-link.active {
+        color: var(--accent) !important;
+        transform: translateY(-2px);
+      }      /* Container Form Enhancement */
+      .container-form {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        padding: 3rem;
+        margin: 3rem auto;
+        max-width: 960px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .container-form::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+        opacity: 0.05;
+        z-index: -1;
+      }
+
+      /* Form elements enhancement */
+      .form-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+        font-weight: 600;
+        font-size: 1rem;
         color: var(--accent);
       }
 
-      .container-form {
-        margin: 4rem auto 2rem;
-        max-width: 700px;
-        background: var(--card);
-        padding: 2rem;
-        border-radius: 10px;
+      .form-label i {
+        font-size: 1.1rem;
       }
 
-      .form-label {
-        margin-bottom: 0.5rem;
+      .form-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Algorithm Selection */
+      .algorithm-selection {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        border: 1px solid rgba(138, 72, 244, 0.2);
+      }      .algorithm-options {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: nowrap;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .algorithm-option {
+        flex: 1;
+        min-width: 180px;
+        max-width: 220px;
+      }
+
+      .algorithm-radio {
+        display: none;
+      }
+
+      .algorithm-label {
+        display: block;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
         font-weight: 500;
+      }
+
+      .algorithm-label:hover {
+        background: rgba(138, 72, 244, 0.2);
+        border-color: var(--primary);
+      }
+
+      .algorithm-radio:checked + .algorithm-label {
+        background: var(--gradient-primary);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      .algorithm-label i {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .algorithm-label .algo-name {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }      .algorithm-label .algo-desc {
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+
+      /* Loading state animation */
+      .loading {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }      /* Responsive design for algorithm selection */
+      @media (max-width: 992px) {
+        .container-form {
+          max-width: 90%;
+        }
+
+        .algorithm-options {
+          gap: 0.8rem;
+        }
+
+        .algorithm-option {
+          min-width: 160px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .algorithm-options {
+          flex-direction: column;
+          gap: 0.8rem;
+        }
+        
+        .algorithm-option {
+          max-width: none;
+        }
+        
+        .algorithm-label {
+          padding: 0.8rem;
+          font-size: 0.9rem;
+        }
+        
+        .algorithm-label i {
+          font-size: 1.2rem;
+        }
+
+        .container-form {
+          margin: 2rem auto;
+          padding: 2rem;
+          max-width: 90%;
+        }
+
+        .city-selection-row {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .results {
+          margin: 2rem auto;
+          gap: 1.5rem;
+        }
+
+        .card-mode {
+          width: 250px;
+        }
+
+        #route_path {
+          margin: 2rem auto;
+          padding: 1rem 1.5rem;
+          font-size: 1rem;
+        }
+      }/* City Selection Row */
+      .city-selection-row {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .city-input-group {
+        flex: 1;
+      }
+
+      .city-input-group .custom-dropdown {
+        margin-bottom: 0;
       }
 
       /* Custom Dropdown Styles */
       .custom-dropdown {
         position: relative;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
       }
 
       .dropdown-input {
         width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: white;
-        color: var(--textf);
+        padding: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        transition: var(--transition);
+        font-size: 1rem;
       }
 
-      .dropdown-input:focus {
-        outline: none;
+      .dropdown-input:hover {
         border-color: var(--primary);
-        box-shadow: 0 0 0 2px rgba(138, 72, 244, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .dropdown-input:focus,
+      .dropdown-input.active {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(138, 72, 244, 0.2);
+        background: rgba(255, 255, 255, 0.1);
       }
 
       .dropdown-arrow {
-        font-size: 12px;
-        color: #666;
-        transition: transform 0.3s ease;
+        font-size: 14px;
+        color: var(--accent);
+        transition: var(--transition);
       }
 
       .dropdown-arrow.open {
@@ -97,14 +339,15 @@
         top: 100%;
         left: 0;
         right: 0;
-        background: white;
-        border: 1px solid #ccc;
+        background: var(--card);
+        border: 2px solid var(--primary);
         border-top: none;
-        border-radius: 0 0 8px 8px;
-        max-height: 200px;
+        border-radius: 0 0 12px 12px;
+        max-height: 250px;
         overflow-y: auto;
         z-index: 1000;
         display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       }
 
       .dropdown-list.show {
@@ -112,104 +355,240 @@
       }
 
       .dropdown-item {
-        padding: 0.75rem;
-        color: var(--textf);
+        padding: 1rem;
+        color: var(--text);
         cursor: pointer;
-        border-bottom: 1px solid #eee;
-        transition: background-color 0.2s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: var(--transition);
+        font-size: 0.95rem;
       }
 
       .dropdown-item:hover {
-        background-color: var(--accent);
+        background: var(--gradient-accent);
         color: #000;
+        transform: translateX(5px);
       }
 
       .dropdown-item:last-child {
         border-bottom: none;
       }
 
-      .dropdown-item.filtered {
-        display: none;
-      }
-
       .search-input {
         width: 100%;
-        padding: 0.5rem;
+        padding: 0.8rem;
         border: none;
-        border-bottom: 1px solid #eee;
-        background: #f8f9fa;
-        color: var(--textf);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        font-size: 0.9rem;
       }
 
       .search-input:focus {
         outline: none;
-        border-bottom-color: var(--primary);
+        border-bottom-color: var(--accent);
+        background: rgba(255, 255, 255, 0.1);
       }
 
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }      /* Button Styles */
       .btn-custom {
-        background: var(--primary);
+        background: var(--gradient-primary);
         border: none;
         color: white;
-        padding: 10px 25px;
-        border-radius: 20px;
+        padding: 1rem 2rem;
+        border-radius: 25px;
         display: block;
         width: 100%;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: var(--transition);
+        box-shadow: 0 8px 25px var(--shadow-primary);
       }
 
       .btn-custom:hover {
-        background: var(--accent);
+        background: var(--gradient-accent);
         color: #000;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px var(--shadow-accent);
       }
 
+      .btn-info {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        padding: 0.6rem 1.5rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: var(--transition);
+        margin-bottom: 1.5rem;
+      }
+
+      .btn-info:hover {
+        background: var(--accent);
+        color: #000;
+        transform: translateY(-2px);
+      }      /* Results Section */
       .results {
         margin: 3rem auto;
-        max-width: 1000px;
+        max-width: 1200px;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 2rem;
+        padding: 0 1rem;
       }
 
       .card-mode {
         background: var(--card);
-        border: none;
-        border-radius: 10px;
-        width: 240px;
-        padding: 1.5rem;
+        border: 2px solid rgba(138, 72, 244, 0.2);
+        border-radius: 20px;
+        width: 280px;
+        padding: 2rem;
         text-align: center;
+        transition: var(--transition);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .card-mode:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+        box-shadow: 0 20px 50px rgba(138, 72, 244, 0.4);
       }
 
       .card-mode img {
-        width: 60px;
-        margin-bottom: 1rem;
+        width: 70px;
+        height: 70px;
+        margin-bottom: 1.5rem;
+        transition: var(--transition);
+        filter: drop-shadow(0 5px 15px var(--shadow-primary));
       }
 
+      .card-mode:hover img {
+        transform: scale(1.1);
+        filter: drop-shadow(0 10px 25px var(--shadow-accent));
+      }
+
+      .card-mode h5 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }      .card-mode p {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+        min-height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .card-mode .result-loading {
+        color: var(--accent);
+        font-size: 1.2rem;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      .card-mode .result-error {
+        color: #ff4757;
+        font-size: 1.1rem;
+      }
+
+      .card-mode .result-success {
+        color: var(--text);
+        font-size: 1.5rem;
+        font-weight: 700;
+      }      /* Route Path */
       #route_path {
         font-weight: 600;
-        margin: 2rem auto;
+        font-size: 1.2rem;
+        margin: 3rem auto;
         text-align: center;
+        padding: 1.5rem 2rem;
+        background: rgba(255, 183, 18, 0.1);
+        border: 2px solid var(--accent);
+        border-radius: 15px;
+        max-width: 800px;
+        color: var(--accent);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(255, 183, 18, 0.1);
       }
 
-      footer {
-        background: var(--primary);
-        color: white;
+      .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 1rem;
-        text-align: center;
-        margin-top: 2rem;
+        background: rgba(138, 72, 244, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(138, 72, 244, 0.3);
+        min-width: 120px;
       }
 
-      /* Modal Styles */
+      .stat-label {
+        color: var(--primary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-value {
+        color: var(--text);
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }/* City List Section - REMOVED */
+
+      /* Footer */
+      footer {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 4rem;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 -4px 20px rgba(138, 72, 244, 0.2);
+      }
+
+      footer img {
+        height: 30px;
+        margin-bottom: 1rem;
+        filter: brightness(1.1);
+      }
+
+      footer p {
+        margin: 0;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }      /* Modal Styles */
       .overlay {
         position: fixed;
         top: 0;
         left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        height: 100vh;
+        width: 100vw;
+        background: rgba(0, 0, 0, 0.7);
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;
-        z-index: 999;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
       }
 
       .overlay.active {
@@ -222,16 +601,20 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%) scale(0.8);
-        background-color: var(--card);
+        background: var(--card);
+        border: 2px solid rgba(138, 72, 244, 0.3);
         color: var(--text);
-        padding: 2rem;
-        border-radius: 10px;
+        padding: 1.5rem;
+        border-radius: 15px;
         width: 90%;
-        max-width: 500px;
-        z-index: 1000;
+        max-width: 400px;
+        max-height: 70vh;
+        overflow-y: auto;
+        z-index: 10000;
         opacity: 0;
         pointer-events: none;
         transition: all 0.3s ease;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
       }
 
       .modal-box.active {
@@ -241,12 +624,21 @@
       }
 
       .modal-box h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         margin-bottom: 1rem;
+        text-align: center;
+        color: var(--accent);
+        font-weight: 600;
       }
 
       .modal-box ol {
-        padding-left: 1rem;
+        padding-left: 1.2rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .modal-box li {
+        margin-bottom: 0.5rem;
       }
 
       .modal-box .buttons {
@@ -255,12 +647,26 @@
       }
 
       .modal-box .close-btn {
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1.5rem;
         border: none;
-        background: var(--accent);
-        color: black;
-        border-radius: 5px;
+        background: var(--gradient-accent);
+        color: #000;
+        border-radius: 8px;
         cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+        font-size: 0.9rem;
+      }
+
+      .modal-box .close-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      /* Prevent body scroll when modal is open */
+      body.modal-open {
+        overflow: hidden;
+        height: 100vh;
       }
     </style>
   </head>
@@ -300,40 +706,81 @@
           <button class="close-btn">Close</button>
         </div>
       </div>
-    </section>
-
-    <section class="container-form">
-      <button type="button" class="btn btn-secondary mb-3" onclick="showModal()">Show Info</button>
+    </section>    <section class="container-form">
+      <button type="button" class="btn btn-info mb-3" onclick="showModal()">Show Info</button>
       <form onsubmit="process(event)">
-        <div class="mb-3">
-          <label for="startCity" class="form-label">Start City</label>
-          <div class="custom-dropdown">
-            <div class="dropdown-input" onclick="toggleDropdown('startCity')">
-              <span id="startCitySelected">Select Start City</span>
-              <span class="dropdown-arrow">▼</span>
+        <div class="form-title">Transportation Route Finder</div>
+          <!-- Algorithm Selection -->
+        <div class="algorithm-selection">
+          <label class="form-label">
+            <i class="fas fa-route"></i> Choose Algorithm
+          </label>
+          <div class="algorithm-options">
+            <div class="algorithm-option">
+              <input type="radio" id="dijkstra" name="algorithm" value="dijkstra" class="algorithm-radio" checked>
+              <label for="dijkstra" class="algorithm-label">
+                <i class="fas fa-chart-line"></i>
+                <div class="algo-name">Dijkstra</div>
+                <div class="algo-desc">Shortest path</div>
+              </label>
             </div>
-            <div class="dropdown-list" id="startCityDropdown">
-              <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('startCity', this.value)">
-              <div class="dropdown-items" id="startCityItems"></div>
+            <div class="algorithm-option">
+              <input type="radio" id="bfs" name="algorithm" value="bfs" class="algorithm-radio">
+              <label for="bfs" class="algorithm-label">
+                <i class="fas fa-project-diagram"></i>
+                <div class="algo-name">BFS</div>
+                <div class="algo-desc">Fewest stops</div>
+              </label>
+            </div>
+            <div class="algorithm-option">
+              <input type="radio" id="dfs" name="algorithm" value="dfs" class="algorithm-radio">
+              <label for="dfs" class="algorithm-label">
+                <i class="fas fa-search"></i>
+                <div class="algo-name">DFS</div>
+                <div class="algo-desc">Path exploration</div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- City Selection Row -->
+        <div class="city-selection-row">
+          <div class="city-input-group">
+            <label for="startCity" class="form-label">
+              <i class="fas fa-map-marker-alt"></i> Start City
+            </label>
+            <div class="custom-dropdown">
+              <div class="dropdown-input" onclick="toggleDropdown('startCity')">
+                <span id="startCitySelected">Select Start City</span>
+                <span class="dropdown-arrow">▼</span>
+              </div>
+              <div class="dropdown-list" id="startCityDropdown">
+                <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('startCity', this.value)">
+                <div class="dropdown-items" id="startCityItems"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="city-input-group">
+            <label for="finishCity" class="form-label">
+              <i class="fas fa-flag-checkered"></i> Finish City
+            </label>
+            <div class="custom-dropdown">
+              <div class="dropdown-input" onclick="toggleDropdown('finishCity')">
+                <span id="finishCitySelected">Select Finish City</span>
+                <span class="dropdown-arrow">▼</span>
+              </div>
+              <div class="dropdown-list" id="finishCityDropdown">
+                <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('finishCity', this.value)">
+                <div class="dropdown-items" id="finishCityItems"></div>
+              </div>
             </div>
           </div>
         </div>
         
-        <div class="mb-3">
-          <label for="finishCity" class="form-label">Finish City</label>
-          <div class="custom-dropdown">
-            <div class="dropdown-input" onclick="toggleDropdown('finishCity')">
-              <span id="finishCitySelected">Select Finish City</span>
-              <span class="dropdown-arrow">▼</span>
-            </div>
-            <div class="dropdown-list" id="finishCityDropdown">
-              <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('finishCity', this.value)">
-              <div class="dropdown-items" id="finishCityItems"></div>
-            </div>
-          </div>
-        </div>
-        
-        <button type="submit" class="btn btn-custom">Find Route</button>
+        <button type="submit" class="btn btn-custom">
+          <i class="fas fa-search"></i> Find Route
+        </button>
       </form>
     </section>
 
@@ -357,15 +804,6 @@
 
     <div id="route_path">Route: ...</div>
 
-    <section class="city-list">
-      <div class="container">
-        <h5 class="text-center mb-4">Available Cities in Central Java</h5>
-        <div class="row row-cols-1 row-cols-md-3 g-3" id="cityListDisplay">
-          <!-- Cities will be populated by JavaScript -->
-        </div>
-      </div>
-    </section>
-
     <footer>
       <img src="{{ url_for('static', filename='assets/TransportimaP.png') }}" height="30" />
       <p class="mt-2">&copy; 2025 Transportima</p>
@@ -383,9 +821,7 @@
       ];
 
       let selectedStartCity = '';
-      let selectedFinishCity = '';
-
-      // Populate dropdown items
+      let selectedFinishCity = '';      // Populate dropdown items
       function populateDropdowns() {
         const startCityItems = document.getElementById('startCityItems');
         const finishCityItems = document.getElementById('finishCityItems');
@@ -404,19 +840,6 @@
           finishItem.textContent = city;
           finishItem.onclick = () => selectCity('finishCity', city);
           finishCityItems.appendChild(finishItem);
-        });
-        
-        // Populate city list display
-        const cityListDisplay = document.getElementById('cityListDisplay');
-        cities.forEach(city => {
-          const col = document.createElement('div');
-          col.className = 'col';
-          col.innerHTML = `
-            <div class="p-2 ps-3 rounded bg-dark bg-opacity-10">
-              <span>•</span> ${city}
-            </div>
-          `;
-          cityListDisplay.appendChild(col);
         });
       }
 
@@ -466,9 +889,7 @@
           const matches = cityName.includes(searchTerm.toLowerCase());
           item.style.display = matches ? 'block' : 'none';
         }
-      }
-
-      async function process(event) {
+      }      async function process(event) {
         event.preventDefault();
         
         if (!selectedStartCity || !selectedFinishCity) {
@@ -481,36 +902,94 @@
           return;
         }
         
+        // Get selected algorithm
+        const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+          // Show loading state
+        const motorcycleEl = document.getElementById('motorcycle');
+        const carEl = document.getElementById('car');
+        const trainEl = document.getElementById('train');
+        const routeEl = document.getElementById('route_path');
+        
+        motorcycleEl.innerText = 'Loading...';
+        motorcycleEl.className = 'result-loading';
+        carEl.innerText = 'Loading...';
+        carEl.className = 'result-loading';
+        trainEl.innerText = 'Loading...';
+        trainEl.className = 'result-loading';
+        routeEl.innerText = 'Route: Calculating...';
+        
         try {
-          // Simulate API call
-          // const res = await fetch('/api/process', {
-          //   method: 'POST',
-          //   headers: { 'Content-Type': 'application/json' },
-          //   body: JSON.stringify({ start: selectedStartCity, finish: selectedFinishCity })
-          // });
-          // const data = await res.json();
+          // Determine API endpoint based on selected algorithm
+          const apiEndpoint = `/api/${selectedAlgorithm}`;
+            const res = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              start: selectedStartCity.toLowerCase(), 
+              finish: selectedFinishCity.toLowerCase() 
+            })
+          });
           
-          // Simulate response for demo
-          const data = {
-            shortest_path_length: Math.floor(Math.random() * 200) + 50,
-            shortest_path_length_car: Math.floor(Math.random() * 180) + 60,
-            shortest_path_length_train: Math.floor(Math.random() * 220) + 40,
-            route_path: `${selectedStartCity} → ${selectedFinishCity}`
-          };
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }          const data = await res.json();
           
-          document.getElementById('motorcycle').innerText = `${data.shortest_path_length} KM`;
-          document.getElementById('car').innerText = `${data.shortest_path_length_car} KM`;
-          document.getElementById('train').innerText = `${data.shortest_path_length_train} KM`;
-          document.getElementById('route_path').innerText = `Route: ${data.route_path}`;
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Error processing request. Please try again.');
-        }
-      }
+          // Update UI with results
+          if (data.results) {
+            // Display results for each transportation mode
+            motorcycleEl.innerText = 
+              data.results.motorcycle && data.results.motorcycle.cost !== null ? `${data.results.motorcycle.cost} KM` : 'No route found';
+            motorcycleEl.className = data.results.motorcycle && data.results.motorcycle.cost !== null ? 'result-success' : 'result-error';
+            
+            carEl.innerText = 
+              data.results.car && data.results.car.cost !== null ? `${data.results.car.cost} KM` : 'No route found';
+            carEl.className = data.results.car && data.results.car.cost !== null ? 'result-success' : 'result-error';
+            
+            trainEl.innerText = 
+              data.results.train && data.results.train.cost !== null ? `${data.results.train.cost} KM` : 'No route found';
+            trainEl.className = data.results.train && data.results.train.cost !== null ? 'result-success' : 'result-error';
+            
+            // Display route path (use the first available route)
+            const firstRoute = (data.results.motorcycle && data.results.motorcycle.path) ||
+                              (data.results.car && data.results.car.path) ||
+                              (data.results.train && data.results.train.path);
+            if (firstRoute) {
+              routeEl.innerText = 
+                `Route: ${firstRoute.join(' → ')}`;
+            } else {
+              routeEl.innerText = 
+                `Route: ${selectedStartCity} → ${selectedFinishCity}`;
+            }
+  
+          } else {
+            throw new Error(data.error || 'No results found');
+          }
+            } catch (error) {
+          console.error('Error details:', error);
+          console.error('Error message:', error.message);
+          console.error('Error stack:', error.stack);
+          
+          // Reset to error state
+          motorcycleEl.innerText = 'Error';
+          motorcycleEl.className = 'result-error';
+          carEl.innerText = 'Error';
+          carEl.className = 'result-error';          trainEl.innerText = 'Error';
+          trainEl.className = 'result-error';
+          routeEl.innerText = 'Route: Error calculating route';
+          
+          alert(`Error processing request: ${error.message}. Please try again.`);
+        }      }
 
       function showModal() {
         document.querySelector('.overlay').classList.add('active');
         document.querySelector('.modal-box').classList.add('active');
+        document.body.classList.add('modal-open');
+      }
+
+      function hideModal() {
+        document.querySelector('.overlay').classList.remove('active');
+        document.querySelector('.modal-box').classList.remove('active');
+        document.body.classList.remove('modal-open');
       }
 
       // Close dropdown when clicking outside
@@ -524,23 +1003,36 @@
             arrow.classList.remove('open');
           }
         });
-      });
-
-      // Modal event listeners
+      });      // Modal event listeners
       document.querySelector('.close-btn').addEventListener('click', () => {
-        document.querySelector('.overlay').classList.remove('active');
-        document.querySelector('.modal-box').classList.remove('active');
+        hideModal();
       });
 
       document.querySelector('.overlay').addEventListener('click', () => {
-        document.querySelector('.overlay').classList.remove('active');
-        document.querySelector('.modal-box').classList.remove('active');
-      });
-
-      // Initialize dropdowns when page loads
+        hideModal();
+      });// Initialize dropdowns when page loads
       document.addEventListener('DOMContentLoaded', function() {
         populateDropdowns();
+        
+        // Add algorithm selection change listener
+        const algorithmRadios = document.querySelectorAll('input[name="algorithm"]');
+        algorithmRadios.forEach(radio => {
+          radio.addEventListener('change', function() {
+            updateAlgorithmInfo(this.value);
+          });
+        });
       });
+
+      function updateAlgorithmInfo(algorithm) {
+        const algorithmInfo = {
+          dijkstra: "Dijkstra's algorithm finds the shortest path by considering edge weights. Best for minimizing total distance or cost.",
+          bfs: "Breadth-First Search finds the path with the fewest intermediate stops. Best for minimizing the number of cities to pass through.",
+          dfs: "Depth-First Search explores paths deeply before backtracking. Provides a valid path but may not be optimal."
+        };
+        
+        // You could show this info in a tooltip or info box if desired
+        console.log(`Selected: ${algorithm} - ${algorithmInfo[algorithm]}`);
+      }
     </script>
   </body>
 </html>
