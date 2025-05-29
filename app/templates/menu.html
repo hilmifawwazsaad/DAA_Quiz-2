@@ -12,6 +12,7 @@
         --accent: #ffb712;
         --bg: #121212;
         --text: #ffffff;
+        --textf: #000000;
         --card: #1f1f1f;
       }
 
@@ -60,7 +61,7 @@
         border-radius: 8px;
         border: 1px solid #ccc;
         padding: 0.75rem;
-        background-color: #fffefe;
+        background-color:rgb(255, 255, 255);
         color: var(--text);
         margin-bottom: 1rem;
       }
@@ -68,7 +69,6 @@
       .dropdown-menu {
         max-height: 200px;
         overflow-y: auto;
-        background-color: #fffefe;
       }
 
       .dropdown-item {
@@ -242,11 +242,11 @@
       <form onsubmit="process(event)">
         <div class="mb-3">
           <label for="startCity" class="form-label">Start City</label>
-          <input type="text" class="form-control" id="startCity" name="startCity" placeholder="Type to search..." list="cityList" required>
+          <input type="textf" class="form-control" id="startCity" name="startCity" placeholder="Type to search..." list="cityList" required>
         </div>
         <div class="mb-3">
           <label for="finishCity" class="form-label">Finish City</label>
-          <input type="text" class="form-control" id="finishCity" name="finishCity" placeholder="Type to search..." list="cityList" required>
+          <input type="textf" class="form-control" id="finishCity" name="finishCity" placeholder="Type to search..." list="cityList" required>
         </div>
         <datalist id="cityList">
           {% for city in cities %}
