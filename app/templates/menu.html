@@ -57,28 +57,93 @@
         font-weight: 500;
       }
 
-      .form-control {
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        padding: 0.75rem;
-        background-color:rgb(255, 255, 255);
-        color: var(--text);
+      /* Custom Dropdown Styles */
+      .custom-dropdown {
+        position: relative;
         margin-bottom: 1rem;
       }
 
-      .dropdown-menu {
+      .dropdown-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: white;
+        color: var(--textf);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .dropdown-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(138, 72, 244, 0.2);
+      }
+
+      .dropdown-arrow {
+        font-size: 12px;
+        color: #666;
+        transition: transform 0.3s ease;
+      }
+
+      .dropdown-arrow.open {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
         max-height: 200px;
         overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      }
+
+      .dropdown-list.show {
+        display: block;
       }
 
       .dropdown-item {
-        color: white;
+        padding: 0.75rem;
+        color: var(--textf);
         cursor: pointer;
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.2s ease;
       }
 
       .dropdown-item:hover {
         background-color: var(--accent);
         color: #000;
+      }
+
+      .dropdown-item:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-item.filtered {
+        display: none;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: none;
+        border-bottom: 1px solid #eee;
+        background: #f8f9fa;
+        color: var(--textf);
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-bottom-color: var(--primary);
       }
 
       .btn-custom {
@@ -203,14 +268,14 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="#">
-          <img src="{{ url_for('static', filename='assets/TransportimaP.png') }}" alt="Logo" />
+          <img src="https://via.placeholder.com/120x40/8a48f4/ffffff?text=Transportima" alt="Logo" />
         </a>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('menu') }}">Menu</a>
+            <a class="nav-link active" href="#">Menu</a>
           </li>
         </ul>
       </div>
@@ -242,17 +307,32 @@
       <form onsubmit="process(event)">
         <div class="mb-3">
           <label for="startCity" class="form-label">Start City</label>
-          <input type="textf" class="form-control" id="startCity" name="startCity" placeholder="Type to search..." list="cityList" required>
+          <div class="custom-dropdown">
+            <div class="dropdown-input" onclick="toggleDropdown('startCity')">
+              <span id="startCitySelected">Select Start City</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list" id="startCityDropdown">
+              <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('startCity', this.value)">
+              <div class="dropdown-items" id="startCityItems"></div>
+            </div>
+          </div>
         </div>
+        
         <div class="mb-3">
           <label for="finishCity" class="form-label">Finish City</label>
-          <input type="textf" class="form-control" id="finishCity" name="finishCity" placeholder="Type to search..." list="cityList" required>
+          <div class="custom-dropdown">
+            <div class="dropdown-input" onclick="toggleDropdown('finishCity')">
+              <span id="finishCitySelected">Select Finish City</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list" id="finishCityDropdown">
+              <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('finishCity', this.value)">
+              <div class="dropdown-items" id="finishCityItems"></div>
+            </div>
+          </div>
         </div>
-        <datalist id="cityList">
-          {% for city in cities %}
-          <option value="{{ city|capitalize }}"></option>
-          {% endfor %}
-        </datalist>
+        
         <button type="submit" class="btn btn-custom">Find Route</button>
       </form>
     </section>
@@ -280,46 +360,152 @@
     <section class="city-list">
       <div class="container">
         <h5 class="text-center mb-4">Available Cities in Central Java</h5>
-        <div class="row row-cols-1 row-cols-md-3 g-3">
-          {% set city_names = [
-            'Wonogiri', 'Sukoharjo', 'Karanganyar', 'Klaten', 'Boyolali', 'Surakarta',
-            'Sragen', 'Grobogan', 'Semarang', 'Kota Semarang', 'Demak', 'Kudus',
-            'Pati', 'Blora', 'Rembang', 'Jepara', 'Magelang', 'Kota Magelang',
-            'Temanggung', 'Kendal', 'Kota Salatiga', 'Purworejo', 'Wonosobo', 'Batang',
-            'Banjarnegara', 'Pekalongan', 'Kota Pekalongan', 'Kebumen', 'Cilacap',
-            'Banyumas', 'Purbalingga', 'Brebes', 'Tegal', 'Kota Tegal', 'Pemalang'
-          ] %}
-          {% for city in city_names %}
-          <div class="col">
-            <div class="p-2 ps-3 rounded bg-dark bg-opacity-10">
-              <span>•</span> {{ city }}
-            </div>
-          </div>
-          {% endfor %}
+        <div class="row row-cols-1 row-cols-md-3 g-3" id="cityListDisplay">
+          <!-- Cities will be populated by JavaScript -->
         </div>
       </div>
     </section>
 
     <footer>
-      <img src="{{ url_for('static', filename='assets/TransportimaP.png') }}" height="30" />
+      <img src="https://via.placeholder.com/120x30/8a48f4/ffffff?text=Transportima" height="30" />
       <p class="mt-2">&copy; 2025 Transportima</p>
     </footer>
 
     <script>
+      // Daftar kota-kota di Jawa Tengah
+      const cities = [
+        'Wonogiri', 'Sukoharjo', 'Karanganyar', 'Klaten', 'Boyolali', 'Surakarta',
+        'Sragen', 'Grobogan', 'Semarang', 'Kota Semarang', 'Demak', 'Kudus',
+        'Pati', 'Blora', 'Rembang', 'Jepara', 'Magelang', 'Kota Magelang',
+        'Temanggung', 'Kendal', 'Kota Salatiga', 'Purworejo', 'Wonosobo', 'Batang',
+        'Banjarnegara', 'Pekalongan', 'Kota Pekalongan', 'Kebumen', 'Cilacap',
+        'Banyumas', 'Purbalingga', 'Brebes', 'Tegal', 'Kota Tegal', 'Pemalang'
+      ];
+
+      let selectedStartCity = '';
+      let selectedFinishCity = '';
+
+      // Populate dropdown items
+      function populateDropdowns() {
+        const startCityItems = document.getElementById('startCityItems');
+        const finishCityItems = document.getElementById('finishCityItems');
+        
+        cities.forEach(city => {
+          // Start City Items
+          const startItem = document.createElement('div');
+          startItem.className = 'dropdown-item';
+          startItem.textContent = city;
+          startItem.onclick = () => selectCity('startCity', city);
+          startCityItems.appendChild(startItem);
+          
+          // Finish City Items
+          const finishItem = document.createElement('div');
+          finishItem.className = 'dropdown-item';
+          finishItem.textContent = city;
+          finishItem.onclick = () => selectCity('finishCity', city);
+          finishCityItems.appendChild(finishItem);
+        });
+        
+        // Populate city list display
+        const cityListDisplay = document.getElementById('cityListDisplay');
+        cities.forEach(city => {
+          const col = document.createElement('div');
+          col.className = 'col';
+          col.innerHTML = `
+            <div class="p-2 ps-3 rounded bg-dark bg-opacity-10">
+              <span>•</span> ${city}
+            </div>
+          `;
+          cityListDisplay.appendChild(col);
+        });
+      }
+
+      function toggleDropdown(type) {
+        const dropdown = document.getElementById(type + 'Dropdown');
+        const arrow = dropdown.previousElementSibling.querySelector('.dropdown-arrow');
+        
+        // Close other dropdown
+        const otherType = type === 'startCity' ? 'finishCity' : 'startCity';
+        const otherDropdown = document.getElementById(otherType + 'Dropdown');
+        const otherArrow = otherDropdown.previousElementSibling.querySelector('.dropdown-arrow');
+        
+        otherDropdown.classList.remove('show');
+        otherArrow.classList.remove('open');
+        
+        // Toggle current dropdown
+        dropdown.classList.toggle('show');
+        arrow.classList.toggle('open');
+        
+        // Clear search
+        const searchInput = dropdown.querySelector('.search-input');
+        searchInput.value = '';
+        filterCities(type, '');
+      }
+
+      function selectCity(type, city) {
+        if (type === 'startCity') {
+          selectedStartCity = city;
+          document.getElementById('startCitySelected').textContent = city;
+        } else {
+          selectedFinishCity = city;
+          document.getElementById('finishCitySelected').textContent = city;
+        }
+        
+        // Close dropdown
+        const dropdown = document.getElementById(type + 'Dropdown');
+        const arrow = dropdown.previousElementSibling.querySelector('.dropdown-arrow');
+        dropdown.classList.remove('show');
+        arrow.classList.remove('open');
+      }
+
+      function filterCities(type, searchTerm) {
+        const items = document.getElementById(type + 'Items').children;
+        
+        for (let item of items) {
+          const cityName = item.textContent.toLowerCase();
+          const matches = cityName.includes(searchTerm.toLowerCase());
+          item.style.display = matches ? 'block' : 'none';
+        }
+      }
+
       async function process(event) {
         event.preventDefault();
-        const startCity = document.getElementById('startCity').value;
-        const finishCity = document.getElementById('finishCity').value;
-        const res = await fetch('/api/process', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ start: startCity, finish: finishCity })
-        });
-        const data = await res.json();
-        document.getElementById('motorcycle').innerText = `${data.shortest_path_length} KM`;
-        document.getElementById('car').innerText = `${data.shortest_path_length_car} KM`;
-        document.getElementById('train').innerText = `${data.shortest_path_length_train} KM`;
-        document.getElementById('route_path').innerText = `Route: ${data.route_path}`;
+        
+        if (!selectedStartCity || !selectedFinishCity) {
+          alert('Please select both start and finish cities');
+          return;
+        }
+        
+        if (selectedStartCity === selectedFinishCity) {
+          alert('Start and finish cities cannot be the same');
+          return;
+        }
+        
+        try {
+          // Simulate API call
+          // const res = await fetch('/api/process', {
+          //   method: 'POST',
+          //   headers: { 'Content-Type': 'application/json' },
+          //   body: JSON.stringify({ start: selectedStartCity, finish: selectedFinishCity })
+          // });
+          // const data = await res.json();
+          
+          // Simulate response for demo
+          const data = {
+            shortest_path_length: Math.floor(Math.random() * 200) + 50,
+            shortest_path_length_car: Math.floor(Math.random() * 180) + 60,
+            shortest_path_length_train: Math.floor(Math.random() * 220) + 40,
+            route_path: `${selectedStartCity} → ${selectedFinishCity}`
+          };
+          
+          document.getElementById('motorcycle').innerText = `${data.shortest_path_length} KM`;
+          document.getElementById('car').innerText = `${data.shortest_path_length_car} KM`;
+          document.getElementById('train').innerText = `${data.shortest_path_length_train} KM`;
+          document.getElementById('route_path').innerText = `Route: ${data.route_path}`;
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Error processing request. Please try again.');
+        }
       }
 
       function showModal() {
@@ -327,6 +513,20 @@
         document.querySelector('.modal-box').classList.add('active');
       }
 
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        const dropdowns = document.querySelectorAll('.custom-dropdown');
+        dropdowns.forEach(dropdown => {
+          if (!dropdown.contains(event.target)) {
+            const dropdownList = dropdown.querySelector('.dropdown-list');
+            const arrow = dropdown.querySelector('.dropdown-arrow');
+            dropdownList.classList.remove('show');
+            arrow.classList.remove('open');
+          }
+        });
+      });
+
+      // Modal event listeners
       document.querySelector('.close-btn').addEventListener('click', () => {
         document.querySelector('.overlay').classList.remove('active');
         document.querySelector('.modal-box').classList.remove('active');
@@ -335,6 +535,11 @@
       document.querySelector('.overlay').addEventListener('click', () => {
         document.querySelector('.overlay').classList.remove('active');
         document.querySelector('.modal-box').classList.remove('active');
+      });
+
+      // Initialize dropdowns when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        populateDropdowns();
       });
     </script>
   </body>
