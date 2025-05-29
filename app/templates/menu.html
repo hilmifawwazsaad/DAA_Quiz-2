@@ -57,6 +57,7 @@
         font-weight: 500;
       }
 
+<<<<<<< Updated upstream
       .form-control {
         border-radius: 8px;
         border: 1px solid #ccc;
@@ -67,6 +68,45 @@
       }
 
       .dropdown-menu {
+=======
+      .custom-dropdown {
+        position: relative;
+        margin-bottom: 1rem;
+      }
+
+      .dropdown-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: white;
+        color: var(--textf);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .dropdown-arrow {
+        font-size: 12px;
+        color: #666;
+        transition: transform 0.3s ease;
+      }
+
+      .dropdown-arrow.open {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+>>>>>>> Stashed changes
         max-height: 200px;
         overflow-y: auto;
       }
@@ -81,6 +121,18 @@
         color: #000;
       }
 
+<<<<<<< Updated upstream
+=======
+      .search-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: none;
+        border-bottom: 1px solid #eee;
+        background: #f8f9fa;
+        color: var(--textf);
+      }
+
+>>>>>>> Stashed changes
       .btn-custom {
         background: var(--primary);
         border: none;
@@ -132,81 +184,21 @@
         text-align: center;
         margin-top: 2rem;
       }
-
-      /* Modal Styles */
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        z-index: 999;
-      }
-
-      .overlay.active {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .modal-box {
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) scale(0.8);
-        background-color: var(--card);
-        color: var(--text);
-        padding: 2rem;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 500px;
-        z-index: 1000;
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s ease;
-      }
-
-      .modal-box.active {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      .modal-box h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .modal-box ol {
-        padding-left: 1rem;
-      }
-
-      .modal-box .buttons {
-        text-align: center;
-        margin-top: 1.5rem;
-      }
-
-      .modal-box .close-btn {
-        padding: 0.5rem 1rem;
-        border: none;
-        background: var(--accent);
-        color: black;
-        border-radius: 5px;
-        cursor: pointer;
-      }
     </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg">
       <div class="container">
+<<<<<<< Updated upstream
         <a class="navbar-brand" href="#">
+=======
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+>>>>>>> Stashed changes
           <img src="{{ url_for('static', filename='assets/TransportimaP.png') }}" alt="Logo" />
         </a>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
+<<<<<<< Updated upstream
             <a class="nav-link" href="{{ url_for('home') }}">Home</a>
           </li>
           <li class="nav-item">
@@ -234,13 +226,21 @@
         <div class="buttons">
           <button class="close-btn">Close</button>
         </div>
+=======
+            <a class="nav-link {% if request.path == '/home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/menu' %}active{% endif %}" href="{{ url_for('menu') }}">Menu</a>
+          </li>
+        </ul>
+>>>>>>> Stashed changes
       </div>
-    </section>
+    </nav>
 
     <section class="container-form">
-      <button type="button" class="btn btn-secondary mb-3" onclick="showModal()">Show Info</button>
       <form onsubmit="process(event)">
         <div class="mb-3">
+<<<<<<< Updated upstream
           <label for="startCity" class="form-label">Start City</label>
           <input type="textf" class="form-control" id="startCity" name="startCity" placeholder="Type to search..." list="cityList" required>
         </div>
@@ -254,6 +254,46 @@
           {% endfor %}
         </datalist>
         <button type="submit" class="btn btn-custom">Find Route</button>
+=======
+          <label class="form-label">Start City</label>
+          <div class="custom-dropdown">
+            <div class="dropdown-input" onclick="toggleDropdown('startCity')">
+              <span id="startCitySelected">Select Start City</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list" id="startCityDropdown">
+              <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('startCity', this.value)">
+              <div class="dropdown-items" id="startCityItems"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Finish City</label>
+          <div class="custom-dropdown">
+            <div class="dropdown-input" onclick="toggleDropdown('finishCity')">
+              <span id="finishCitySelected">Select Finish City</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list" id="finishCityDropdown">
+              <input type="text" class="search-input" placeholder="Search cities..." onkeyup="filterCities('finishCity', this.value)">
+              <div class="dropdown-items" id="finishCityItems"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="algorithm" class="form-label">Choose Algorithm</label>
+          <select id="algorithm" class="form-select" required>
+            <option value="" selected disabled>Select Algorithm</option>
+            <option value="dijkstra">Dijkstra</option>
+            <option value="bfs">Breadth-First Search (BFS)</option>
+            <option value="dfs">Depth-First Search (DFS)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-custom">Find Route</button>
+>>>>>>> Stashed changes
       </form>
     </section>
 
@@ -276,6 +316,7 @@
     </section>
 
     <div id="route_path">Route: ...</div>
+<<<<<<< Updated upstream
 
     <section class="city-list">
       <div class="container">
@@ -299,6 +340,9 @@
         </div>
       </div>
     </section>
+=======
+    <div id="used_algorithm" style="text-align: center; margin-top: 1rem;"></div>
+>>>>>>> Stashed changes
 
     <footer>
       <img src="{{ url_for('static', filename='assets/TransportimaP.png') }}" height="30" />
@@ -306,6 +350,7 @@
     </footer>
 
     <script>
+<<<<<<< Updated upstream
       async function process(event) {
         event.preventDefault();
         const startCity = document.getElementById('startCity').value;
@@ -335,6 +380,117 @@
       document.querySelector('.overlay').addEventListener('click', () => {
         document.querySelector('.overlay').classList.remove('active');
         document.querySelector('.modal-box').classList.remove('active');
+=======
+      const cities = [
+        'Wonogiri', 'Sukoharjo', 'Karanganyar', 'Klaten', 'Boyolali', 'Surakarta',
+        'Sragen', 'Grobogan', 'Semarang', 'Kota Semarang', 'Demak', 'Kudus',
+        'Pati', 'Blora', 'Rembang', 'Jepara', 'Magelang', 'Kota Magelang',
+        'Temanggung', 'Kendal', 'Kota Salatiga', 'Purworejo', 'Wonosobo', 'Batang',
+        'Banjarnegara', 'Pekalongan', 'Kota Pekalongan', 'Kebumen', 'Cilacap',
+        'Banyumas', 'Purbalingga', 'Brebes', 'Tegal', 'Kota Tegal', 'Pemalang'
+      ];
+
+      let selectedStartCity = '';
+      let selectedFinishCity = '';
+
+      function populateDropdowns() {
+        const startItems = document.getElementById('startCityItems');
+        const finishItems = document.getElementById('finishCityItems');
+        cities.forEach(city => {
+          const item1 = document.createElement('div');
+          item1.className = 'dropdown-item';
+          item1.textContent = city;
+          item1.onclick = () => selectCity('startCity', city);
+          startItems.appendChild(item1);
+
+          const item2 = document.createElement('div');
+          item2.className = 'dropdown-item';
+          item2.textContent = city;
+          item2.onclick = () => selectCity('finishCity', city);
+          finishItems.appendChild(item2);
+        });
+      }
+
+      function toggleDropdown(type) {
+        const dropdown = document.getElementById(type + 'Dropdown');
+        const arrow = dropdown.previousElementSibling.querySelector('.dropdown-arrow');
+        const other = type === 'startCity' ? 'finishCity' : 'startCity';
+        document.getElementById(other + 'Dropdown').classList.remove('show');
+        document.getElementById(other + 'Dropdown').previousElementSibling.querySelector('.dropdown-arrow').classList.remove('open');
+        dropdown.classList.toggle('show');
+        arrow.classList.toggle('open');
+      }
+
+      function selectCity(type, city) {
+        if (type === 'startCity') {
+          selectedStartCity = city;
+          document.getElementById('startCitySelected').textContent = city;
+        } else {
+          selectedFinishCity = city;
+          document.getElementById('finishCitySelected').textContent = city;
+        }
+        document.getElementById(type + 'Dropdown').classList.remove('show');
+        document.getElementById(type + 'Dropdown').previousElementSibling.querySelector('.dropdown-arrow').classList.remove('open');
+      }
+
+      function filterCities(type, value) {
+        const items = document.getElementById(type + 'Items').children;
+        for (let item of items) {
+          item.style.display = item.textContent.toLowerCase().includes(value.toLowerCase()) ? 'block' : 'none';
+        }
+      }
+
+      async function process(event) {
+        event.preventDefault();
+
+        if (!selectedStartCity || !selectedFinishCity) {
+          alert('Please select both start and finish cities');
+          return;
+        }
+
+        if (selectedStartCity === selectedFinishCity) {
+          alert('Start and finish cities cannot be the same');
+          return;
+        }
+
+        const algorithm = document.getElementById('algorithm').value;
+        const endpoint = `http://localhost:5000/api/${algorithm}`;
+
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              start: selectedStartCity.toLowerCase(),
+              finish: selectedFinishCity.toLowerCase()
+            })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            throw new Error(data.error || 'Unknown error');
+          }
+
+          // Tampilkan hasil ke UI
+          document.getElementById('motorcycle').innerText = `${data.motorcycle || data.distance || data.path_length || '...'} KM`;
+          document.getElementById('car').innerText = `${data.car || data.distance || data.path_length || '...'} KM`;
+          document.getElementById('train').innerText = `${data.train || data.distance || data.path_length || '...'} KM`;
+          document.getElementById('route_path').innerText = `Route: ${data.route || data.path || data.route_path || '...'}`
+          document.getElementById('used_algorithm').innerText = `Algorithm used: ${algorithm.toUpperCase()}`;
+        } catch (err) {
+          console.error(err);
+          alert('Failed to get result: ' + err.message);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', populateDropdowns);
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.custom-dropdown')) {
+          document.querySelectorAll('.dropdown-list').forEach(el => el.classList.remove('show'));
+          document.querySelectorAll('.dropdown-arrow').forEach(el => el.classList.remove('open'));
+        }
+>>>>>>> Stashed changes
       });
     </script>
   </body>
